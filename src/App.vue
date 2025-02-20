@@ -1,24 +1,24 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
     <div class="container mx-auto px-4 py-8">
-      <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">
-        <span class="text-blue-600">Wiki</span>Search
+      <h1 class="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-6">
+        <span class="text-blue-600 dark:text-blue-400">Wiki</span>Search
       </h1>
 
       <SearchBar @search="handleSearch" />
       
       <div class="mt-6 max-w-3xl mx-auto">
-        <div v-if="error" class="bg-red-50 p-4 rounded-lg border border-red-200">
+        <div v-if="error" class="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
           <div class="flex">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
             <div class="ml-3">
-              <h3 class="text-sm font-medium text-red-800">Error</h3>
-              <p class="mt-1 text-sm text-red-700">{{ error }}</p>
+              <h3 class="text-sm font-medium text-red-800 dark:text-red-200">Error</h3>
+              <p class="mt-1 text-sm text-red-700 dark:text-red-300">{{ error }}</p>
               <button 
                 @click="handleSearch(searchQuery)" 
-                class="mt-2 text-sm text-red-600 hover:text-red-800 font-medium"
+                class="mt-2 text-sm text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 font-medium"
               >
                 Try again
               </button>
@@ -27,11 +27,11 @@
         </div>
         
         <div v-else-if="results.length > 0">
-          <p class="text-sm text-gray-500 mb-4 flex justify-between items-center">
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 flex justify-between items-center">
             <span>Found {{ totalResults }} results for "{{ searchQuery }}"</span>
             <button 
               @click="handleSearch(searchQuery)" 
-              class="text-blue-600 hover:text-blue-800 flex items-center text-sm"
+              class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 flex items-center text-sm"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -47,23 +47,25 @@
           />
         </div>
         
-        <div v-else-if="searchQuery" class="text-center py-10 text-gray-500">
+        <div v-else-if="searchQuery" class="text-center py-10 text-gray-500 dark:text-gray-400">
           No results found for "{{ searchQuery }}"
         </div>
         
         <div v-else class="text-center py-10">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-300 dark:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
-          <p class="mt-4 text-gray-500">Start typing to search Wikipedia</p>
+          <p class="mt-4 text-gray-500 dark:text-gray-400">Start typing to search Wikipedia</p>
         </div>
       </div>
     </div>
     
-    <footer class="mt-10 py-4 border-t border-gray-200 text-center text-gray-600 text-sm">
+    <footer class="mt-10 py-4 border-t border-gray-200 dark:border-gray-800 text-center text-gray-600 dark:text-gray-400 text-sm">
       <p>Created with Vue.js and Tailwind CSS</p>
       <p class="mt-1">Data from Wikipedia API</p>
     </footer>
+
+    <ThemeToggle />
   </div>
 </template>
 
