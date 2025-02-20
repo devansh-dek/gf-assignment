@@ -10,9 +10,36 @@
       <div class="mt-6 max-w-3xl mx-auto">
         <Loader v-if="loading" />
         
+        <div v-else-if="error" class="bg-red-50 p-4 rounded-lg border border-red-200">
+          <div class="flex">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-red-800">Error</h3>
+              <p class="mt-1 text-sm text-red-700">{{ error }}</p>
+              <button 
+                @click="handleSearch(searchQuery)" 
+                class="mt-2 text-sm text-red-600 hover:text-red-800 font-medium"
+              >
+                Try again
+              </button>
+            </div>
+          </div>
+        </div>
+        
         <div v-else-if="results.length > 0">
-          <p class="text-sm text-gray-500 mb-4">
-            Found {{ results.length }} results for "{{ searchQuery }}"
+          <p class="text-sm text-gray-500 mb-4 flex justify-between items-center">
+            <span>Found {{ results.length }} results for "{{ searchQuery }}"</span>
+            <button 
+              @click="handleSearch(searchQuery)" 
+              class="text-blue-600 hover:text-blue-800 flex items-center text-sm"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              Refresh
+            </button>
           </p>
           <SearchResultsList :results="results" :searchQuery="searchQuery" />
         </div>
@@ -29,6 +56,12 @@
         </div>
       </div>
     </div>
+    
+    <!-- Responsive footer -->
+    <footer class="mt-10 py-4 border-t border-gray-200 text-center text-gray-600 text-sm">
+      <p>Created with Vue.js and Tailwind CSS</p>
+      <p class="mt-1">Data from Wikipedia API</p>
+    </footer>
   </div>
 </template>
 
@@ -41,9 +74,11 @@ import Loader from './components/Loader.vue';
 const searchQuery = ref('');
 const results = ref([]);
 const loading = ref(false);
+const error = ref(null);
 
 const handleSearch = async (query) => {
   searchQuery.value = query;
+  error.value = null;
   
   if (!query) {
     results.value = [];
@@ -57,6 +92,11 @@ const handleSearch = async (query) => {
     const response = await fetch(
       `https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&origin=*&srsearch=${encodeURIComponent(query)}`
     );
+    
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    
     const data = await response.json();
     
     // Process results
@@ -71,6 +111,7 @@ const handleSearch = async (query) => {
     }, 300);
   } catch (error) {
     console.error('Search error:', error);
+    error.value = 'Failed to fetch search results. Please try again.';
     results.value = [];
     loading.value = false;
   }
