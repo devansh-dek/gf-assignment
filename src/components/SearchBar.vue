@@ -1,4 +1,3 @@
-<!-- src/components/SearchBar.vue -->
 <template>
     <div class="w-full max-w-xl mx-auto my-6">
       <div class="relative flex items-center">

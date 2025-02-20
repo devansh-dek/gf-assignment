@@ -1,6 +1,7 @@
 <script setup>
 import Loader from './components/Loader.vue'
 import SearchBar from './components/SearchBar.vue'
+import SearchResultItem from './components/SearchResultItem.vue'
 </script>
 
 <template>
@@ -8,6 +9,7 @@ import SearchBar from './components/SearchBar.vue'
     <h1>Hello World !</h1>
     <Loader />
     <SearchBar />
+    <!-- <SearchResultItem /> -->
   </header>
 
   <main>
