@@ -69,7 +69,7 @@
 import { ref } from 'vue';
 import SearchBar from './components/SearchBar.vue';
 import SearchResultsList from './components/SearchResultsList.vue';
-import Loader from './components/Loader.vue';
+import Loader from './components/CustomLoader.vue';
 
 const searchQuery = ref('');
 const results = ref([]);
