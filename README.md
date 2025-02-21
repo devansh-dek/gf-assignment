@@ -1,120 +1,212 @@
-🔍 Modern Wikipedia Search
-A sleek and modern Wikipedia search application built with Vue.js, featuring real-time search, infinite scrolling, and a beautiful responsive design with dark mode support.
-Show Image
-✨ Features
+# 🔍 Modern Wikipedia Search
 
-Real-time Search: Dynamic search results with debouncing for optimal performance
-Infinite Scrolling: Seamlessly load more results as you scroll
-Beautiful UI: Modern, clean interface with smooth animations
-Dark Mode: Full support for light and dark themes
-Responsive Design: Works perfectly on all device sizes
-Result Highlighting: Search terms are highlighted in results
-Interactive Results: Expandable result cards with additional information
-Loading States: Elegant loading animations and states
+A modern, high-performance Wikipedia search application built with Vue.js 3, featuring real-time search capabilities and an elegant user interface. ✨
 
-🚀 Getting Started
-Prerequisites
+## ⭐ Features
 
-Node.js (v14 or higher)
-npm or yarn
+**🎯 Core Functionality:**
+* 🔄 Real-time search with smart debouncing
+* ♾️ Infinite scroll pagination
+* 🎨 Dynamic result highlighting
+* 📑 Expandable search results
+* 📊 Word count tracking
 
-Installation
+**💻 Technical Highlights:**
+* ⚡ Vue 3 Composition API
+* 🎭 Tailwind CSS styling
+* 📱 Responsive design
+* 🎬 Smooth animations
+* ♿ Accessibility features
 
-Clone the repository:
+## 🚀 Installation
 
-bashCopygit clone https://github.com/yourusername/modern-wikipedia-search.git
-cd modern-wikipedia-search
+```bash
+# Clone the repository
+git clone https://github.com/devansh-dek/gf-assignment.git
 
-Install dependencies:
+# Navigate to project directory
+cd gf-assiggment
 
-bashCopynpm install
-# or
-yarn install
+# Install dependencies
+npm install
 
-Start the development server:
+# Start development server
+npm run dev
+```
 
-bashCopynpm run dev
-# or
-yarn dev
+## 📁 Project Structure
 
-Open your browser and visit http://localhost:5173
-
-🏗️ Project Structure
-Copysrc/
+```
+src/
 ├── components/
-│   ├── CustomLoader.vue      # Loading animation component
-│   ├── SearchBar.vue         # Search input component
-│   ├── SearchResultItem.vue  # Individual result card
-│   └── SearchResultsList.vue # Results container with infinite scroll
+│   ├── CustomLoader.vue     # Loading animation
+│   ├── SearchBar.vue        # Search input field
+│   ├── SearchResultItem.vue # Result card component
+│   └── SearchResultsList.vue # Results container
 ├── assets/
-│   └── main.css             # Global styles
-├── App.vue                   # Root component
-└── main.js                   # Application entry point
-🎨 Key Components
-SearchBar
+│   └── main.css            # Global styles
+├── App.vue                  # Root component
+└── main.js                 # Entry point
+```
 
-Debounced search input
-Clear button functionality
-Smooth animations and transitions
-Accessible search interface
+## 🧩 Component Overview
 
-SearchResultItem
+### 🔍 SearchBar Component
 
-Expandable result cards
-Word count calculation
-Search term highlighting
-External Wikipedia link integration
+```vue
+<!-- Search input with debounce -->
+<input
+  type="text"
+  v-model="searchInput"
+  @input="debounceSearch"
+  placeholder="Search Wikipedia..."
+  class="search-input"
+/>
+```
 
-SearchResultsList
+**✨ Features:**
+* ⌛ Debounced search input
+* 🔄 Clear button
+* 📜 Search history
+* 💭 Auto-suggestions
 
-Infinite scroll implementation
-Staggered animation effects
-Loading states
-End of results detection
+### 📑 SearchResultItem Component
 
-🛠️ Technical Features
+```vue
+<!-- Result card with expandable content -->
+<div class="result-card">
+  <h3 v-html="highlightMatch(result.title)"></h3>
+  <p v-html="highlightMatch(result.snippet)"></p>
+</div>
+```
 
-Built with Vue 3 Composition API
-Tailwind CSS for styling
-Intersection Observer for infinite scrolling
-Debounced search functionality
-Transition and animation systems
-Dark mode with system preference detection
+**✨ Features:**
+* 📂 Expandable details
+* 🎯 Highlighted search terms
+* 📊 Word count display
+* 🔗 Direct Wikipedia links
 
-🔧 Customization
-Styling
-The application uses Tailwind CSS for styling. You can customize the theme by modifying the tailwind.config.js file:
-javascriptCopymodule.exports = {
+### 📋 SearchResultsList Component
+
+```vue
+<!-- Results container with infinite scroll -->
+<transition-group
+  name="staggered-fade"
+  tag="div"
+  class="results-container"
+>
+  <SearchResultItem
+    v-for="result in results"
+    :key="result.pageid"
+    :result="result"
+  />
+</transition-group>
+```
+
+**✨ Features:**
+* ♾️ Infinite scroll
+* ⌛ Loading states
+* 🎬 Smooth transitions
+* ⚠️ Error handling
+
+## ⚙️ Configuration
+
+### 🎨 Tailwind Configuration
+
+```javascript
+// tailwind.config.js
+module.exports = {
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        // Your custom colors
+        primary: '#4F46E5',
+        secondary: '#6366F1'
       }
     }
   }
 }
-Search Parameters
-You can adjust the search debounce timing in SearchBar.vue:
-javascriptCopyconst debounceSearch = () => {
+```
+
+### 🔍 Search Configuration
+
+```javascript
+// SearchBar.vue
+const debounceSearch = () => {
   clearTimeout(debounceTimeout);
   debounceTimeout = setTimeout(() => {
     emit('search', searchInput.value);
-  }, 300); // Adjust this value (in milliseconds)
+  }, 300);
 };
-📝 License
-This project is licensed under the MIT License - see the LICENSE.md file for details.
-🤝 Contributing
-Contributions are welcome! Please feel free to submit a Pull Request.
+```
 
-Fork the project
-Create your feature branch (git checkout -b feature/AmazingFeature)
-Commit your changes (git commit -m 'Add some AmazingFeature')
-Push to the branch (git push origin feature/AmazingFeature)
-Open a Pull Request
+## 📖 Usage
 
-🙏 Acknowledgments
+1. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-Built with Vue.js
-Styled with Tailwind CSS
-Icons from Heroicons
-Wikipedia API for search functionality
+2. Open your browser:
+   ```
+   http://localhost:5173
+   ```
+
+3. Begin searching:
+   * ⌨️ Type in the search bar
+   * 🔄 Results appear in real-time
+   * 📜 Scroll for more results
+   * 👆 Click results to expand
+
+## 👨‍💻 Development
+
+### 🛠️ Commands
+
+```bash
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+
+# Run tests
+npm run test
+```
+
+### 📝 Code Style
+
+This project follows Vue.js style guide and uses ESLint with the following configuration:
+
+```javascript
+// .eslintrc.js
+module.exports = {
+  extends: [
+    'plugin:vue/vue3-recommended',
+    'eslint:recommended'
+  ]
+}
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch
+   ```bash
+   git checkout -b feature/AmazingFeature
+   ```
+3. Commit your changes
+   ```bash
+   git commit -m 'Add AmazingFeature'
+   ```
+4. Push to the branch
+   ```bash
+   git checkout -b feature/AmazingFeature
+   ```
+5. Open a Pull Request
+
+---
+
+Made with ❤️ using Vue.js and Tailwind CSS
