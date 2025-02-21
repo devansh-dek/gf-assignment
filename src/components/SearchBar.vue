@@ -32,7 +32,6 @@ import { ref } from 'vue';
 const searchInput = ref('');
 const emit = defineEmits(['search']);
   
-// Improved debounce function
 let debounceTimeout;
 const debounceSearch = () => {
   clearTimeout(debounceTimeout);

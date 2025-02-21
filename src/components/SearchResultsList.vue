@@ -83,12 +83,10 @@ const sentinel = ref(null);
 const container = ref(null);
 const autoLoadEnabled = ref(false);
 
-// Computed property to determine if there are more results to load
 const hasMoreResults = computed(() => {
   return props.results.length > 0 && props.results.length < props.totalResults;
 });
 
-// Manual load more function
 const manualLoadMore = () => {
   if (!props.loading && hasMoreResults.value) {
     window.scrollBy({

@@ -110,28 +110,24 @@ const initialLoading = computed(() => {
 
 const handleSearch = async (query) => {
   if (query === searchQuery.value && loading.value) {
-    return; // Prevent duplicate searches
+    return; 
   }
   
   searchQuery.value = query;
   error.value = null;
   currentOffset.value = 0;
-  results.value = []; // Clear results immediately
+  results.value = [];
   
   if (!query) {
     totalResults.value = 0;
     return;
   }
-  
-  // Set loading to true before fetching results
   loading.value = true;
   await fetchResults();
 };
 
 const fetchResults = async () => {
   try {
-    // Add a small delay to show loading state (only for demo purposes)
-    // In production, you'd rely on actual network time
     await new Promise(resolve => setTimeout(resolve, 300));
     
     const response = await fetch(
@@ -144,7 +140,6 @@ const fetchResults = async () => {
     
     const data = await response.json();
     
-    // Make sure we have valid data
     if (data && data.query && data.query.searchinfo) {
       totalResults.value = data.query.searchinfo.totalhits;
       
@@ -156,7 +151,6 @@ const fetchResults = async () => {
       if (currentOffset.value === 0) {
         results.value = newResults;
       } else {
-        // Only add non-duplicate results (using pageid as unique identifier)
         const existingIds = new Set(results.value.map(item => item.pageid));
         const uniqueNewResults = newResults.filter(item => !existingIds.has(item.pageid));
         results.value = [...results.value, ...uniqueNewResults];
@@ -168,7 +162,6 @@ const fetchResults = async () => {
     console.error('Search error:', err);
     error.value = 'Failed to fetch search results. Please try again.';
   } finally {
-    // Always set loading to false when done, whether success or error
     loading.value = false;
   }
 };
@@ -176,7 +169,6 @@ const fetchResults = async () => {
 const loadMoreResults = async () => {
   if (loading.value || results.value.length >= totalResults.value) return;
   
-  // Set loading state before fetching more results
   loading.value = true;
   currentOffset.value += RESULTS_PER_PAGE;
   await fetchResults();
